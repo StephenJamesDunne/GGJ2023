@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <array>
+#include <TextureManager.h>
 #include <Mouth.h>
 #include <Enemy.h>
 

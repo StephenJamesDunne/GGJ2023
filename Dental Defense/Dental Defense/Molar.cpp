@@ -7,8 +7,8 @@ Molar::Molar()
 	auto* hb = dynamic_cast<sf::CircleShape*>(m_hitbox);
 	hb->setRadius(40.f);
 	hb->setOrigin(40.f, 40.f);
-	hb->setFillColor(sf::Color::White);
-	hb->setOutlineColor(sf::Color::Black);
+	hb->setFillColor(sf::Color(255,255,255,128));
+	hb->setOutlineColor(sf::Color(0,0,0,128));
 	hb->setOutlineThickness(8.0f);
 }
 

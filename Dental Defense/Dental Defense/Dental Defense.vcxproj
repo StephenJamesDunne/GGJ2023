@@ -26,6 +26,7 @@
     <ClCompile Include="Molar.cpp" />
     <ClCompile Include="Mouth.cpp" />
     <ClCompile Include="Powerups.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Tooth.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -35,6 +36,7 @@
     <ClInclude Include="Molar.h" />
     <ClInclude Include="Mouth.h" />
     <ClInclude Include="Powerups.h" />
+    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Tooth.h" />
   </ItemGroup>
   <ItemGroup>

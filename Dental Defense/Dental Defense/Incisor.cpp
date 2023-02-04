@@ -4,11 +4,12 @@ Incisor::Incisor()
 {
 	m_hitbox = new sf::RectangleShape();
 
-	dynamic_cast<sf::RectangleShape*>(m_hitbox)->setSize({80.f, 160.f});
-	dynamic_cast<sf::RectangleShape*>(m_hitbox)->setOrigin(20.f, 40.f);
-	dynamic_cast<sf::RectangleShape*>(m_hitbox)->setFillColor(sf::Color::White);
-	dynamic_cast<sf::RectangleShape*>(m_hitbox)->setOutlineColor(sf::Color::Black);
-	dynamic_cast<sf::RectangleShape*>(m_hitbox)->setOutlineThickness(8.0f);
+	auto* hb = dynamic_cast<sf::RectangleShape*>(m_hitbox);
+	hb->setSize({80.f, 160.f});
+	hb->setOrigin(20.f, 40.f);
+	hb->setFillColor(sf::Color(255, 255, 255, 128));
+	hb->setOutlineColor(sf::Color(0, 0, 0, 128));
+	hb->setOutlineThickness(8.0f);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

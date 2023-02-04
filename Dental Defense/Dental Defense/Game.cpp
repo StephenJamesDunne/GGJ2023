@@ -16,17 +16,16 @@ Game::Game() :
 	m_window{ sf::VideoMode{ WINDOW_WIDTH, WINDOW_HEIGHT, 32U }, "Dental Defense" },
 	m_exitGame{false} //when true game will exit
 {
+	auto tm = TextureManager::getInstance();
+	tm->loadTexture("mouth", "ASSETS\\IMAGES\\mouth.png");
+	tm->loadTexture("germ", "ASSETS\\IMAGES\\germ.png");
+
+
 	setupFontAndText(); // load font 
+
+	m_mouth.init();
 	
 	m_mouth.setPosition({ (WINDOW_WIDTH / 2.f), (WINDOW_HEIGHT / 2.f) });
-
-	for (auto& e : m_enemies)
-	{
-		e.setPosition({ (WINDOW_WIDTH / 2.f), (WINDOW_HEIGHT / 2.f) });
-		float angleToMove = rand() % 360;
-		e.setDirection({ cos(angleToMove), sin(angleToMove) });
-		e.setSpeed((rand() % 100) + 20); // between 20-120
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -104,14 +103,16 @@ void Game::processEvents()
 /// <param name="t_event">key press event</param>
 void Game::processKeys(sf::Event t_event)
 {
+	static int x{ 0 };
+
 	switch (t_event.key.code)
 	{
 	case sf::Keyboard::Escape:
 		m_exitGame = true;
 		break;
 	case sf::Keyboard::Space:
-		for (auto& e : m_enemies)
-			e.setSpeed(0.f);
+		
+		m_enemies[x++%10].spawn({ (WINDOW_WIDTH / 2.f), (WINDOW_HEIGHT / 2.f) });
 		break;
 	default:
 		break;
@@ -123,7 +124,7 @@ void Game::processKeys(sf::Event t_event)
 void Game::processMousePress(sf::Event t_event)
 {
 	sf::Vector2i mousePosition = sf::Mouse::getPosition(m_window);
-	m_mouth.clicked(sf::Vector2f(mousePosition));
+	m_mouth.click(sf::Vector2f(mousePosition));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -142,8 +143,7 @@ void Game::update(sf::Time t_deltaTime)
 	for (auto& e : m_enemies)
 	{
 		e.update(t_deltaTime);
-
-		m_mouth.clicked(e.getPosition());
+		m_mouth.check(e);
 	}
 }
 
