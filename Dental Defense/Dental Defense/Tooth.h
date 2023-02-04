@@ -9,7 +9,7 @@ public:
 	Tooth();
 	~Tooth() { delete m_hitbox; }
 
-	sf::Vector2f  getPosition(sf::Vector2f) { return m_hitbox->getPosition(); }
+	sf::Vector2f  getPosition() { return m_hitbox->getPosition(); }
 	void setPosition(sf::Vector2f t_position) { m_hitbox->setPosition(t_position); }
 
 	virtual bool contains(sf::Vector2f t_point) = 0;

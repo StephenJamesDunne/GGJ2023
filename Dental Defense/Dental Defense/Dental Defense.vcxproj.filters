@@ -51,6 +51,9 @@
     <ClCompile Include="Tooth.cpp">
       <Filter>Source Files\Teeth</Filter>
     </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -73,6 +76,9 @@
     </ClInclude>
     <ClInclude Include="Incisor.h">
       <Filter>Header Files\Teeth</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

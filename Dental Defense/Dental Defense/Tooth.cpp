@@ -8,5 +8,5 @@ Tooth::Tooth()
 
 void Tooth::onClick()
 {
-	m_hitbox->setFillColor(sf::Color::Red);	
+	m_hitbox->setFillColor(sf::Color(255,0,0,64));	
 }
