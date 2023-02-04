@@ -4,6 +4,8 @@ const unsigned WINDOW_HEIGHT = sf::VideoMode::getDesktopMode().height / 4.0f * 3
 const unsigned WINDOW_WIDTH = sf::VideoMode::getDesktopMode().width / 4.0f * 3.0f;
 const float DEG_2_RAD = 3.14159265358979323 / 180.f;
 
+
+
 /// <summary>
 /// default constructor
 /// setup the window properties
@@ -16,16 +18,15 @@ Game::Game() :
 {
 	setupFontAndText(); // load font 
 	
-	m_enemy[0].setPosition(sf::Vector2f(200.0f, 200.0f));
-
-	float angle = rand() % 360;
-	float x = cos(angle);
-	float y = sin(angle);
-
-	m_enemy[0].setVelocity({x, y});
-
-
 	m_mouth.setPosition({ (WINDOW_WIDTH / 2.f), (WINDOW_HEIGHT / 2.f) });
+
+	for (auto& e : m_enemies)
+	{
+		e.setPosition({ (WINDOW_WIDTH / 2.f), (WINDOW_HEIGHT / 2.f) });
+		float angleToMove = rand() % 360;
+		e.setDirection({ cos(angleToMove), sin(angleToMove) });
+		e.setSpeed((rand() % 100) + 20); // between 20-120
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -103,9 +104,17 @@ void Game::processEvents()
 /// <param name="t_event">key press event</param>
 void Game::processKeys(sf::Event t_event)
 {
-	if (sf::Keyboard::Escape == t_event.key.code)
+	switch (t_event.key.code)
 	{
+	case sf::Keyboard::Escape:
 		m_exitGame = true;
+		break;
+	case sf::Keyboard::Space:
+		for (auto& e : m_enemies)
+			e.setSpeed(0.f);
+		break;
+	default:
+		break;
 	}
 }
 
@@ -129,13 +138,13 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		m_window.close();
 	}
+	
+	for (auto& e : m_enemies)
+	{
+		e.update(t_deltaTime);
 
-	m_enemy[0].update(t_deltaTime);
-	
-	
-		
-	
-	
+		m_mouth.clicked(e.getPosition());
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -148,13 +157,10 @@ void Game::render()
 	m_window.clear(sf::Color::White);
 	m_window.draw(m_welcomeMessage);
 	m_window.draw(m_logoSprite);
-
 	m_mouth.draw(m_window);
 	
-	for (Enemy& enemy : m_enemy)
-	{
+	for (Enemy& enemy : m_enemies)
 		enemy.draw(m_window);
-	}
 
 	m_window.display();
 }

@@ -24,7 +24,7 @@ private:
 	
 	void setupFontAndText();
 
-	std::array<Enemy, 10> m_enemy;
+	std::array<Enemy, 10> m_enemies;
 	Mouth m_mouth; // All our teeth live here
 	
 	//sf::Texture m_enemyTexture;
@@ -32,8 +32,7 @@ private:
 	sf::Vector2f m_enemyLocation{ 200.0f, 200.0f };
 	sf::Vector2f m_enemyVelocity{ 1.0f, 1.0f };
 
-	float m_speed = 3.5f;
-	
+	float m_speed = 5.0f;
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
