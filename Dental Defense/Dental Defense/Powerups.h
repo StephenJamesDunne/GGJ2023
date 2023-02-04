@@ -1,6 +1,23 @@
 #pragma once
+
+#include <iostream>
+#include<SFML/Graphics.hpp>
+
 class Powerups
 {
+public:
+
+
+
+
+
+
+
+
+
+
+
+
 	//Toothbrush (will revive health of a tooth)
 	// Might spawn in a level and can be picked up
 	// 

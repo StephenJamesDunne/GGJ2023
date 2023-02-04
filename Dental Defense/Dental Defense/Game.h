@@ -1,22 +1,26 @@
 #ifndef GAME_HPP
 #define GAME_HPP
-/// <summary>
-/// include guards used so we don't process this file twice
-/// same as #pragma once
-/// Don't forget the endif at the bottom
-/// </summary>
+
 #include <SFML/Graphics.hpp>
 #include <array>
 #include <Tooth.h>
+#include <Enemy.h>
+
+enum class Direction
+{
+	None,
+	Up,
+	Left,
+	Right,
+	Down
+};
 
 class Game
 {
 public:
 	Game();
 	~Game();
-	/// <summary>
-	/// main method for game
-	/// </summary>
+	
 	void run();
 
 private:
@@ -28,10 +32,17 @@ private:
 	void render();
 	
 	void setupFontAndText();
-	void setupSprite();
 
+	std::array<Enemy, 10> m_enemy;
 	std::array<Tooth, 8> m_teeth;
-
+	
+	//sf::Texture m_enemyTexture;
+	//sf::Sprite  m_enemySprite;
+	sf::Vector2f m_enemyLocation{ 200.0f, 200.0f };
+	sf::Vector2f m_enemyVelocity{ 1.0f, 1.0f };
+	Direction m_facing = Direction::None;
+	float m_speed = 3.5f;
+	
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
 	sf::Text m_welcomeMessage; // text used for message on screen
@@ -39,9 +50,14 @@ private:
 	sf::Sprite m_logoSprite; // sprite used for sfml logo
 	bool m_exitGame; // control exiting game
 
+	int currentFrame = 0;
+
+
+	
+
 	bool checkBounds(); //check if mouse is on top of a sprite
 
 };
 
-#endif // !GAME_HPP
+#endif 
 
