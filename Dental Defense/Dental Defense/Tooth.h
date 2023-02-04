@@ -7,21 +7,22 @@ class Tooth
 {
 public:
 	Tooth();
+	~Tooth() { delete m_hitbox; }
 
-	void setPosition(sf::Vector2f t_position) { m_sprite.setPosition(t_position); }
-	sf::Vector2f  getPosition(sf::Vector2f) { return m_sprite.getPosition(); }
+	sf::Vector2f  getPosition(sf::Vector2f) { return m_hitbox->getPosition(); }
+	void setPosition(sf::Vector2f t_position) { m_hitbox->setPosition(t_position); }
 
-	sf::FloatRect getBounds() { return m_sprite.getGlobalBounds(); }
-
-	bool contains(sf::Vector2f t_point);
+	virtual bool contains(sf::Vector2f t_point) = 0;
 
 	void onClick(); 
 
-	void draw(sf::RenderWindow& t_window) { t_window.draw(m_sprite); }
+	void draw(sf::RenderWindow& t_window) { t_window.draw(*m_hitbox); }
 
 private:
-	sf::CircleShape m_sprite;
-	
+
+protected:
+
+	sf::Shape* m_hitbox;
 	
 	//health values
 	
