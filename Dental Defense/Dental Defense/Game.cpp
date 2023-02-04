@@ -15,6 +15,16 @@ Game::Game() :
 {
 	setupFontAndText(); // load font 
 	setupSprite(); // load texture
+
+	for (int i = 0; i < m_teeth.size() / 2; ++i)
+	{
+		m_teeth[i].setPosition({ 400.f + (200.f * i), 200.f });
+	}
+
+	for (int i = m_teeth.size() / 2; i < m_teeth.size(); ++i)
+	{
+		m_teeth[i].setPosition({ 400.f + (200.f * (i-4)), 400.f });
+	}
 }
 
 /// <summary>
@@ -70,6 +80,11 @@ void Game::processEvents()
 		{
 			processKeys(newEvent);
 		}
+		if (sf::Event::MouseButtonPressed == newEvent.type)
+		{
+			processMousePress(newEvent);
+		}
+
 	}
 }
 
@@ -83,6 +98,25 @@ void Game::processKeys(sf::Event t_event)
 	if (sf::Keyboard::Escape == t_event.key.code)
 	{
 		m_exitGame = true;
+	}
+}
+
+void Game::processMousePress(sf::Event t_event)
+{
+	//if left click happens within m_teeth sprite, set sprite color to red
+	t_event.mouseButton.x;
+	t_event.mouseButton.y;
+
+	// OR
+
+	sf::Vector2i mousePosition = sf::Mouse::getPosition(m_window);
+
+	for (Tooth& t : m_teeth)
+	{
+		if (t.contains(sf::Vector2f(mousePosition)))
+		{
+			t.onClick();
+		}
 	}
 }
 
@@ -106,6 +140,18 @@ void Game::render()
 	m_window.clear(sf::Color::White);
 	m_window.draw(m_welcomeMessage);
 	m_window.draw(m_logoSprite);
+
+
+	for (Tooth& tooth : m_teeth)
+	{
+		tooth.draw(m_window);
+	}
+
+	//for (int i = 0; i < m_teeth.size(); ++i)
+	//{
+	//	m_teeth[i].draw(m_window);
+	//}
+
 	m_window.display();
 }
 
@@ -142,4 +188,12 @@ void Game::setupSprite()
 	m_logoSprite.setTexture(m_logoTexture);
 	m_logoSprite.setPosition((WINDOW_WIDTH / 3.2f), (WINDOW_HEIGHT /3.0f));
 	m_logoSprite.setScale(2.0f, 2.0f);
+}
+
+bool Game::checkBounds()
+{
+	bool mouseOnSprite{ true };
+
+	sf::Vector2i mousePosition = sf::Mouse::getPosition(m_window);
+
 }
