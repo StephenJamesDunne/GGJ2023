@@ -19,6 +19,12 @@
     <Filter Include="Resource Files\IMAGES">
       <UniqueIdentifier>{1d793ccc-0d22-4eea-8d0e-c5b5a5270a40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Teeth">
+      <UniqueIdentifier>{78e85032-c679-4eeb-a916-473ddeda3d2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Teeth">
+      <UniqueIdentifier>{6855fc09-0b2e-4907-9d7d-ba1b2c3440e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -27,21 +33,27 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Tooth.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Powerups.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Mouth.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Incisor.cpp">
+      <Filter>Source Files\Teeth</Filter>
+    </ClCompile>
+    <ClCompile Include="Molar.cpp">
+      <Filter>Source Files\Teeth</Filter>
+    </ClCompile>
+    <ClCompile Include="Tooth.cpp">
+      <Filter>Source Files\Teeth</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Tooth.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Powerups.h">
@@ -49,6 +61,18 @@
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouth.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Molar.h">
+      <Filter>Header Files\Teeth</Filter>
+    </ClInclude>
+    <ClInclude Include="Tooth.h">
+      <Filter>Header Files\Teeth</Filter>
+    </ClInclude>
+    <ClInclude Include="Incisor.h">
+      <Filter>Header Files\Teeth</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

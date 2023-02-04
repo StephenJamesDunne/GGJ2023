@@ -1,7 +1,5 @@
 #include "Game.h"
 
-#include <iostream>
-
 const unsigned WINDOW_HEIGHT = sf::VideoMode::getDesktopMode().height / 4.0f * 3.0f;
 const unsigned WINDOW_WIDTH = sf::VideoMode::getDesktopMode().width / 4.0f * 3.0f;
 const float DEG_2_RAD = 3.14159265358979323 / 180.f;
@@ -18,28 +16,19 @@ Game::Game() :
 {
 	setupFontAndText(); // load font 
 	
-
-	for (int i = 0; i < m_teeth.size() / 2; ++i)
-	{
-		m_teeth[i].setPosition({ 400.f + (200.f * i), 200.f });
-	}
-
-	for (int i = m_teeth.size() / 2; i < m_teeth.size(); ++i)
-	{
-		m_teeth[i].setPosition({ 400.f + (200.f * (i-4)), 400.f });
-	}
 	m_enemy[0].setPosition(sf::Vector2f(200.0f, 200.0f));
 
 	float angle = rand() % 360;
 	float x = cos(angle);
 	float y = sin(angle);
 
-	std::cout << x << y;
-
-
 	m_enemy[0].setVelocity({x, y});
 
+
+	m_mouth.setPosition({ (WINDOW_WIDTH / 2.f), (WINDOW_HEIGHT / 2.f) });
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 /// <summary>
 /// default destructor we didn't dynamically allocate anything
@@ -49,6 +38,7 @@ Game::~Game()
 {
 }
 
+////////////////////////////////////////////////////////////////////////////////
 
 /// <summary>
 /// main game loop
@@ -76,6 +66,9 @@ void Game::run()
 		render(); // as many as possible
 	}
 }
+
+////////////////////////////////////////////////////////////////////////////////
+
 /// <summary>
 /// handle user and system events/ input
 /// get key presses/ mouse moves etc. from OS
@@ -102,6 +95,7 @@ void Game::processEvents()
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////
 
 /// <summary>
 /// deal with key presses from the user
@@ -115,24 +109,15 @@ void Game::processKeys(sf::Event t_event)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////
+
 void Game::processMousePress(sf::Event t_event)
 {
-	//if left click happens within m_teeth sprite, set sprite color to red
-	t_event.mouseButton.x;
-	t_event.mouseButton.y;
-
-	// OR
-
 	sf::Vector2i mousePosition = sf::Mouse::getPosition(m_window);
-
-	for (Tooth& t : m_teeth)
-	{
-		if (t.contains(sf::Vector2f(mousePosition)))
-		{
-			t.onClick();
-		}
-	}
+	m_mouth.clicked(sf::Vector2f(mousePosition));
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 /// <summary>
 /// Update the game world
@@ -153,6 +138,8 @@ void Game::update(sf::Time t_deltaTime)
 	
 }
 
+////////////////////////////////////////////////////////////////////////////////
+
 /// <summary>
 /// draw the frame and then switch buffers
 /// </summary>
@@ -161,19 +148,18 @@ void Game::render()
 	m_window.clear(sf::Color::White);
 	m_window.draw(m_welcomeMessage);
 	m_window.draw(m_logoSprite);
+
+	m_mouth.draw(m_window);
 	
 	for (Enemy& enemy : m_enemy)
 	{
 		enemy.draw(m_window);
 	}
 
-	for (Tooth& tooth : m_teeth)
-	{
-		tooth.draw(m_window);
-	}
-
 	m_window.display();
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 /// <summary>
 /// load the font and setup the text message for screen
@@ -192,18 +178,5 @@ void Game::setupFontAndText()
 	m_welcomeMessage.setOutlineColor(sf::Color::Black);
 	m_welcomeMessage.setFillColor(sf::Color::White);
 	m_welcomeMessage.setOutlineThickness(3.0f);
-
-}
-
-/// <summary>
-/// load the texture and setup the sprite for the logo
-/// </summary>
-
-
-bool Game::checkBounds()
-{
-	bool mouseOnSprite{ true };
-
-	sf::Vector2i mousePosition = sf::Mouse::getPosition(m_window);
 
 }

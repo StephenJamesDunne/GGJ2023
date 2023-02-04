@@ -21,13 +21,19 @@
   <ItemGroup>
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Incisor.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Molar.cpp" />
+    <ClCompile Include="Mouth.cpp" />
     <ClCompile Include="Powerups.cpp" />
     <ClCompile Include="Tooth.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Incisor.h" />
+    <ClInclude Include="Molar.h" />
+    <ClInclude Include="Mouth.h" />
     <ClInclude Include="Powerups.h" />
     <ClInclude Include="Tooth.h" />
   </ItemGroup>
@@ -102,7 +108,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SFML_SDK)/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SFML_SDK)/include;./</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SFML_SDK)\lib</AdditionalLibraryDirectories>
