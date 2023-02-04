@@ -2,6 +2,7 @@
 #define GAME_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <array>
 #include <TextureManager.h>
 #include <Mouth.h>
@@ -22,7 +23,7 @@ private:
 	void processMousePress(sf::Event t_event);
 	void update(sf::Time t_deltaTime);
 	void render();
-	
+	void setupMusic();
 	void setupFontAndText();
 
 	std::array<Enemy, 10> m_enemies;
@@ -40,6 +41,8 @@ private:
 	sf::Text m_welcomeMessage; // text used for message on screen
 	sf::Texture m_mouthTexture; // texture used for sfml logo
 	sf::Sprite m_logoSprite; // sprite used for sfml logo
+	sf::SoundBuffer m_buffer; //music buffer
+	sf::Music m_music; //music file
 	bool m_exitGame; // control exiting game
 
 	int currentFrame = 0;

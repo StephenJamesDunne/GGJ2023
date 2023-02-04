@@ -17,11 +17,13 @@ Game::Game() :
 	m_exitGame{false} //when true game will exit
 {
 	auto tm = TextureManager::getInstance();
-	tm->loadTexture("mouth", "ASSETS\\IMAGES\\mouth.png");
 	tm->loadTexture("germ", "ASSETS\\IMAGES\\germ.png");
+	tm->loadTexture("mouth", "ASSETS\\IMAGES\\mouth.png");
+	
 
 
-	setupFontAndText(); // load font 
+	setupFontAndText(); // load font
+	setupMusic();
 
 	m_mouth.init();
 	
@@ -163,6 +165,19 @@ void Game::render()
 		enemy.draw(m_window);
 
 	m_window.display();
+}
+
+void Game::setupMusic()
+{
+	
+	if (!m_music.openFromFile("ASSETS\\AUDIO\\nova.wav"))
+	{
+		std::cout << "problem loading music :(" << std::endl;
+	}
+	m_music.setVolume(50.0f);
+	m_music.setLoop(true);
+	m_music.play();
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////

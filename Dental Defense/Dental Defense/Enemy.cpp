@@ -13,7 +13,7 @@ Enemy::Enemy()
 
 void Enemy::init()
 {
-	auto tx = TextureManager::getInstance()->getTexture("mouth");
+	auto tx = TextureManager::getInstance()->getTexture("germ");
 
 	m_sprite.setTexture(*tx);
 	m_sprite.setScale(0.1f, 0.1f);
@@ -23,6 +23,7 @@ void Enemy::init()
 
 void Enemy::spawn(sf::Vector2f t_position)
 {
+	init();
 	setPosition(t_position);
 
 	float angleToMove = rand() % 360;
