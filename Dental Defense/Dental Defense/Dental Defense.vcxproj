@@ -19,14 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Enemies.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Powerups.cpp" />
     <ClCompile Include="Tooth.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Enemies.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Powerups.h" />
     <ClInclude Include="Tooth.h" />

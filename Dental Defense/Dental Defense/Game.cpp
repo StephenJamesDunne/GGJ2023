@@ -1,20 +1,23 @@
 #include "Game.h"
+
 #include <iostream>
 
 const unsigned WINDOW_HEIGHT = sf::VideoMode::getDesktopMode().height / 4.0f * 3.0f;
 const unsigned WINDOW_WIDTH = sf::VideoMode::getDesktopMode().width / 4.0f * 3.0f;
+const float DEG_2_RAD = 3.14159265358979323 / 180.f;
+
 /// <summary>
 /// default constructor
 /// setup the window properties
 /// load and setup the text 
-/// load and setup thne image
+/// load and setup the image
 /// </summary>
 Game::Game() :
 	m_window{ sf::VideoMode{ WINDOW_WIDTH, WINDOW_HEIGHT, 32U }, "Dental Defense" },
 	m_exitGame{false} //when true game will exit
 {
 	setupFontAndText(); // load font 
-	setupSprite(); // load texture
+	
 
 	for (int i = 0; i < m_teeth.size() / 2; ++i)
 	{
@@ -25,6 +28,17 @@ Game::Game() :
 	{
 		m_teeth[i].setPosition({ 400.f + (200.f * (i-4)), 400.f });
 	}
+	m_enemy[0].setPosition(sf::Vector2f(200.0f, 200.0f));
+
+	float angle = rand() % 360;
+	float x = cos(angle);
+	float y = sin(angle);
+
+	std::cout << x << y;
+
+
+	m_enemy[0].setVelocity({x, y});
+
 }
 
 /// <summary>
@@ -130,6 +144,13 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		m_window.close();
 	}
+
+	m_enemy[0].update(t_deltaTime);
+	
+	
+		
+	
+	
 }
 
 /// <summary>
@@ -140,17 +161,16 @@ void Game::render()
 	m_window.clear(sf::Color::White);
 	m_window.draw(m_welcomeMessage);
 	m_window.draw(m_logoSprite);
-
+	
+	for (Enemy& enemy : m_enemy)
+	{
+		enemy.draw(m_window);
+	}
 
 	for (Tooth& tooth : m_teeth)
 	{
 		tooth.draw(m_window);
 	}
-
-	//for (int i = 0; i < m_teeth.size(); ++i)
-	//{
-	//	m_teeth[i].draw(m_window);
-	//}
 
 	m_window.display();
 }
@@ -178,17 +198,7 @@ void Game::setupFontAndText()
 /// <summary>
 /// load the texture and setup the sprite for the logo
 /// </summary>
-void Game::setupSprite()
-{
-	if (!m_logoTexture.loadFromFile("ASSETS\\IMAGES\\mouthLogo.png"))
-	{
-		// simple error message if previous call fails
-		std::cout << "problem loading logo" << std::endl;
-	}
-	m_logoSprite.setTexture(m_logoTexture);
-	m_logoSprite.setPosition((WINDOW_WIDTH / 3.2f), (WINDOW_HEIGHT /3.0f));
-	m_logoSprite.setScale(2.0f, 2.0f);
-}
+
 
 bool Game::checkBounds()
 {
