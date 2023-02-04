@@ -2,14 +2,17 @@
 
 Enemy::Enemy()
 {
-	m_texture.loadFromFile("ASSETS\\IMAGES\\plaque.jpg");
+	m_texture.loadFromFile("ASSETS\\IMAGES\\germ.png");
 	m_sprite.setTexture(m_texture);
-	m_sprite.setPosition(200.0f, 200.0f);
+
+	sf::FloatRect bounds = m_sprite.getGlobalBounds();
+
+	m_sprite.setOrigin({ bounds.width / 2.f, bounds.height / 2.f });
 }
 
 void Enemy::update(sf::Time t_dT)
 {
-	m_position += m_velocity;
+	m_position += m_velocity * m_speed * t_dT.asSeconds();
 }
 
 void Enemy::draw(sf::RenderWindow& t_window)
