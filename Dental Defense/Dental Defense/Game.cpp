@@ -14,10 +14,6 @@ Game::Game() :
 	m_window{ sf::VideoMode{ WINDOW_WIDTH, WINDOW_HEIGHT, 32U }, "Dental Defense" },
 	m_exitGame{false} //when true game will exit
 {
-	auto tm = TextureManager::getInstance();
-	tm->loadTexture("germ", "ASSETS\\IMAGES\\germ.png");
-	tm->loadTexture("mouth", "ASSETS\\IMAGES\\mouth.png");
-	
 	loadTextures();
 	setupMusic();
 	setupFontAndText(); // load font
@@ -129,9 +125,7 @@ void Game::processKeys(sf::Event t_event)
 		m_exitGame = true;
 		break;
 	case sf::Keyboard::Space:
-		newEnemy = EnemyPool::getInstance()->spawn();
-		newEnemy->spawn({ (WINDOW_WIDTH / 2.f), (WINDOW_HEIGHT / 2.f) });
-		m_enemies.push_back(newEnemy);
+		// Do nothing
 		break;
 	default:
 		break;
@@ -142,8 +136,23 @@ void Game::processKeys(sf::Event t_event)
 
 void Game::processMousePress(sf::Event t_event)
 {
-	sf::Vector2i mousePosition = sf::Mouse::getPosition(m_window);
-	m_mouth.click(sf::Vector2f(mousePosition));
+	sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(m_window));
+	m_mouth.click(mousePosition);
+
+	std::set<Enemy*> toRemove;
+	for (auto& e : m_enemies)
+	{
+		if (e->getBounds().contains(mousePosition))
+		{
+			EnemyPool::getInstance()->restore(e);
+			toRemove.insert(e);
+		}
+	}
+	m_enemies.erase(
+		std::remove_if(m_enemies.begin(), m_enemies.end(),
+			[&](Enemy* e) -> bool { return toRemove.count(e); }),
+		m_enemies.end()
+	);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -158,6 +167,13 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		m_window.close();
 	}
+
+	if (!(rand() % 40)) {
+		auto newEnemy = EnemyPool::getInstance()->spawn();
+		newEnemy->spawn({ (WINDOW_WIDTH / 2.f), (WINDOW_HEIGHT / 2.f) });
+		m_enemies.push_back(newEnemy);
+	}
+
 	
 	std::set<Enemy*> toRemove;
 	for (auto& e : m_enemies)
@@ -167,12 +183,11 @@ void Game::update(sf::Time t_deltaTime)
 			toRemove.insert(e);
 	}
 
-	//m_enemies.erase(std::remove_if(
-	//	m_enemies.begin(),
-	//	m_enemies.end(),
-	//	[&](Enemy const* e)-> bool
-	//	{ return toRemove.count(e); }),
-	//	m_enemies.end());
+	m_enemies.erase(
+		std::remove_if(m_enemies.begin(), m_enemies.end(),
+		[&](Enemy* e) -> bool { return toRemove.count(e); }),
+		m_enemies.end()
+	);
 
 	m_mouth.update(t_deltaTime);
 }

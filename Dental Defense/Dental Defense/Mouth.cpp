@@ -14,6 +14,44 @@ Mouth::Mouth()
 void Mouth::init()
 {
 	loadTextures();
+
+	auto tm = TextureManager::getInstance();
+
+	m_topMolars[0]->setTexture(*tm->getTexture("MT8L"));
+	m_topMolars[1]->setTexture(*tm->getTexture("MT7L"));
+	m_topMolars[2]->setTexture(*tm->getTexture("PMT6L"));
+	m_topMolars[3]->setTexture(*tm->getTexture("PMT5L"));
+	m_topMolars[4]->setTexture(*tm->getTexture("PMT5R"));
+	m_topMolars[5]->setTexture(*tm->getTexture("PMT6R"));
+	m_topMolars[6]->setTexture(*tm->getTexture("MT7R"));
+	m_topMolars[7]->setTexture(*tm->getTexture("MT8R"));
+
+	m_topIncisors[0]->setTexture(*tm->getTexture("PMT4L"));
+	m_topIncisors[1]->setTexture(*tm->getTexture("CT3L"));
+	m_topIncisors[2]->setTexture(*tm->getTexture("INT2L"));
+	m_topIncisors[3]->setTexture(*tm->getTexture("INT1L"));
+	m_topIncisors[4]->setTexture(*tm->getTexture("INT1R"));
+	m_topIncisors[5]->setTexture(*tm->getTexture("INT2R"));
+	m_topIncisors[6]->setTexture(*tm->getTexture("INT3R"));
+	m_topIncisors[7]->setTexture(*tm->getTexture("CT4R"));
+
+	m_bottomMolars[0]->setTexture(*tm->getTexture("MB8L"));
+	m_bottomMolars[1]->setTexture(*tm->getTexture("MB7L"));
+	m_bottomMolars[2]->setTexture(*tm->getTexture("PMB6L"));
+	m_bottomMolars[3]->setTexture(*tm->getTexture("PMB5L"));
+	m_bottomMolars[4]->setTexture(*tm->getTexture("PMB5R"));
+	m_bottomMolars[5]->setTexture(*tm->getTexture("PMB6R"));
+	m_bottomMolars[6]->setTexture(*tm->getTexture("MB7R"));
+	m_bottomMolars[7]->setTexture(*tm->getTexture("MB8R"));
+
+	m_bottomIncisors[0]->setTexture(*tm->getTexture("PMB4L"));
+	m_bottomIncisors[1]->setTexture(*tm->getTexture("CB3L"));
+	m_bottomIncisors[2]->setTexture(*tm->getTexture("INB2L"));
+	m_bottomIncisors[3]->setTexture(*tm->getTexture("INB1L"));
+	m_bottomIncisors[4]->setTexture(*tm->getTexture("INB1R"));
+	m_bottomIncisors[5]->setTexture(*tm->getTexture("INB2R"));
+	m_bottomIncisors[6]->setTexture(*tm->getTexture("CB3R"));
+	m_bottomIncisors[7]->setTexture(*tm->getTexture("PMB4R"));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

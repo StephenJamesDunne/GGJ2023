@@ -19,12 +19,15 @@ public:
 	void setDirection(sf::Vector2f t_velocity) { m_velocity = t_velocity; }
 	void setSpeed(float t_speed) { m_speed = t_speed; }
 
+	sf::FloatRect getBounds() { return m_hitbox.getGlobalBounds(); }
+
 	void update(sf::Time t_dT);
 
 	void draw(sf::RenderWindow& t_window);
 
 private:
 
+	sf::CircleShape m_hitbox;
 	sf::Sprite m_sprite;
 
 	sf::Vector2f m_position;

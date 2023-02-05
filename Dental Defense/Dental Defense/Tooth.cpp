@@ -27,10 +27,6 @@ void Tooth::takeDamage()
 			m_health -= germCount;
 		else
 			die();
-
-		auto redVal = 255 - ((255 / float(MAX_HEALTH)) * m_health);
-		std::cout << "Taking damage! Health: " << m_health << " Red value: " << redVal << std::endl;
-		m_hitbox->setFillColor({ sf::Uint8(redVal), 0, 0, 128 });
 	}
 }
 
@@ -38,5 +34,25 @@ void Tooth::takeDamage()
 
 void Tooth::die()
 {
+	std::cout << "Tooth died :(" << std::endl;
 	m_health = 0;
+	m_sprite.setColor({ 0,0,0,0 });
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void Tooth::draw(sf::RenderWindow& t_window)
+{
+	t_window.draw(m_sprite);
+	//t_window.draw(*m_hitbox);
+
+	std::vector<Enemy*> toDraw;
+	while (!m_germsOnTooth.empty())
+		toDraw.push_back(m_germsOnTooth.top()), m_germsOnTooth.pop();
+
+	for (Enemy* enemy : toDraw)
+		enemy->draw(t_window);
+
+	// abeer was here :) <3 
+	for (Enemy* enemy : toDraw) m_germsOnTooth.push(enemy);
 }
