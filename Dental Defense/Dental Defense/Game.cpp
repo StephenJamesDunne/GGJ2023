@@ -4,6 +4,7 @@ const unsigned WINDOW_HEIGHT = sf::VideoMode::getDesktopMode().height / 4.0f * 3
 const unsigned WINDOW_WIDTH = sf::VideoMode::getDesktopMode().width / 4.0f * 3.0f;
 const float DEG_2_RAD = 3.14159265358979323 / 180.f;
 
+
 /// <summary>
 /// default constructor
 /// setup the window properties
@@ -17,6 +18,19 @@ Game::Game() :
 	loadTextures();
 	setupMusic();
 	setupFontAndText(); // load font
+	
+
+	auto tm = TextureManager::getInstance();
+
+	m_playButton.setTexture(*tm->getTexture("playButton"));
+	m_playButton.setOrigin({ (WINDOW_WIDTH / 2.f), (WINDOW_HEIGHT / 2.f) });
+	m_playButton.setPosition({ (WINDOW_WIDTH / 2.f) + 20.0f, (WINDOW_HEIGHT / 2.f) + 190.f });
+	m_playButton.setScale(0.8f, 0.8f);
+
+	m_background.setTexture(*tm->getTexture("menuScreen"));
+	m_background.setOrigin({ (WINDOW_WIDTH / 2.f), (WINDOW_HEIGHT / 2.f) });
+	m_background.setPosition({ (WINDOW_WIDTH / 2.f) + 20.0f, (WINDOW_HEIGHT / 2.f) - 150.f });
+	m_background.setScale(1.1f, 0.8f);
 
 	m_mouth.init();
 	
@@ -59,6 +73,20 @@ void Game::run()
 			update(timePerFrame); //60 fps
 		}
 		render(); // as many as possible
+
+		switch (m_state)
+		{
+		case State::MENU:
+			updateMenu();
+
+			break;
+		case State::GAME:
+			
+
+			break;
+		}
+	
+			
 	}
 }
 
@@ -200,12 +228,21 @@ void Game::update(sf::Time t_deltaTime)
 void Game::render()
 {
 	m_window.clear(sf::Color::White);
-	m_window.draw(m_welcomeMessage);
-	m_window.draw(m_logoSprite);
-	m_mouth.draw(m_window);
-	
-	for (Enemy* enemy : m_enemies)
-		enemy->draw(m_window);
+
+	if (m_state == State::MENU)
+	{
+		m_window.draw(m_background);
+		m_window.draw(m_playButton);
+		updateMenu();
+	}
+	else if (m_state == State::GAME)
+	{
+		m_window.draw(m_logoSprite);
+		m_mouth.draw(m_window);
+
+		for (Enemy* enemy : m_enemies)
+			enemy->draw(m_window);
+	}
 
 	m_window.display();
 }
@@ -213,7 +250,7 @@ void Game::render()
 void Game::setupMusic()
 {
 	
-	if (!m_music.openFromFile("ASSETS\\AUDIO\\nova.wav"))
+	if (!m_music.openFromFile("ASSETS\\AUDIO\\nova.ogg"))
 	{
 		std::cout << "problem loading music :(" << std::endl;
 	}
@@ -243,4 +280,17 @@ void Game::setupFontAndText()
 	m_welcomeMessage.setFillColor(sf::Color::White);
 	m_welcomeMessage.setOutlineThickness(3.0f);
 
+}
+
+void Game::updateMenu()
+{
+	sf::Vector2f mousePos = (sf::Vector2f)sf::Mouse::getPosition(m_window);
+
+	if (m_playButton.getGlobalBounds().contains(mousePos))
+	{
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		{
+			m_state = State::GAME;
+		}
+	}
 }
