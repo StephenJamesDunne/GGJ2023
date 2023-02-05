@@ -11,9 +11,10 @@
 #include <Mouth.h>
 #include <EnemyPool.h>
 
-enum class State {
+enum class GameState {
 	MENU,
-	GAME
+	GAMEPLAY,
+	GAME_OVER
 };
 
 class Game
@@ -37,10 +38,11 @@ private:
 	void updateMenu();
 	std::vector<Enemy*> m_enemies;
 	Mouth m_mouth; // All our teeth live here
-	State m_state = State::MENU;
+	GameState m_state = GameState::MENU;
 	float m_speed = 5.0f;
 	
 	sf::Sprite m_background;
+	sf::Sprite m_gameOverScreen;
 	sf::Sprite m_playButton;
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message

@@ -9,6 +9,8 @@
 #include <Enemy.h>
 #include <TextureManager.h>
 
+#include <vector>
+
 class Mouth
 {
 public:
@@ -26,6 +28,8 @@ public:
 	void click(sf::Vector2f t_position);
 
 	void draw(sf::RenderWindow& t_window);
+
+	std::vector<sf::Vector2f> getTeethPositions();
 
 private:
 

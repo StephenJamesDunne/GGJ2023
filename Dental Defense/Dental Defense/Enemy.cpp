@@ -27,17 +27,18 @@ void Enemy::init()
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void Enemy::spawn(sf::Vector2f t_position)
+void Enemy::spawn(sf::Vector2f t_position, sf::Vector2f t_target)
 {
 	init();
-
 
 	sf::Vector2f randomOffset = { float(rand() % 300) - 151.f, float(rand() % 300) - 151.f };
 	setPosition(t_position + randomOffset);
 
-	float angleToMove = rand() % 360;
-	setDirection({ cos(angleToMove), sin(angleToMove) });
-	setSpeed((rand() % 100) + 20); // between 20-120
+	auto lineToTarget = t_target - m_position;
+	lineToTarget /= sqrt(powf(lineToTarget.x, 2) + powf(lineToTarget.y, 2));
+
+	setDirection(lineToTarget);
+	setSpeed((rand() % 100) + 60); // between 60-160
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -32,6 +32,11 @@ Game::Game() :
 	m_background.setPosition({ (WINDOW_WIDTH / 2.f) + 20.0f, (WINDOW_HEIGHT / 2.f) - 150.f });
 	m_background.setScale(1.1f, 0.8f);
 
+	m_gameOverScreen.setTexture(*tm->getTexture("gameOver"));
+	m_gameOverScreen.setOrigin({ (WINDOW_WIDTH / 2.f), (WINDOW_HEIGHT / 2.f) });
+	m_gameOverScreen.setPosition({ (WINDOW_WIDTH / 2.f) + 20.0f, (WINDOW_HEIGHT / 2.f) - 150.f });
+	m_gameOverScreen.setScale(1.1f, 0.8f);
+
 	m_mouth.init();
 	
 	m_mouth.setPosition({ (WINDOW_WIDTH / 2.f), (WINDOW_HEIGHT / 2.f) });
@@ -76,11 +81,11 @@ void Game::run()
 
 		switch (m_state)
 		{
-		case State::MENU:
+		case GameState::MENU:
 			updateMenu();
 
 			break;
-		case State::GAME:
+		case GameState::GAMEPLAY:
 			
 
 			break;
@@ -196,28 +201,50 @@ void Game::update(sf::Time t_deltaTime)
 		m_window.close();
 	}
 
-	if (!(rand() % 40)) {
-		auto newEnemy = EnemyPool::getInstance()->spawn();
-		newEnemy->spawn({ (WINDOW_WIDTH / 2.f), (WINDOW_HEIGHT / 2.f) });
-		m_enemies.push_back(newEnemy);
-	}
-
-	
-	std::set<Enemy*> toRemove;
-	for (auto& e : m_enemies)
+	if (m_state == GameState::GAMEPLAY)
 	{
-		e->update(t_deltaTime);
-		if (m_mouth.check(*e))
-			toRemove.insert(e);
+		static int spawnChance{ 40 };
+
+		if (!(rand() % spawnChance)) {
+			auto newEnemy = EnemyPool::getInstance()->spawn();
+
+			auto validTeeth = m_mouth.getTeethPositions();
+
+			if (validTeeth.empty())
+			{
+				m_state = GameState::GAME_OVER;
+				return;
+			}
+
+			if (newEnemy)
+			{
+				sf::Vector2f target = validTeeth[rand() % validTeeth.size()];
+
+				newEnemy->spawn({ (WINDOW_WIDTH / 2.f), (WINDOW_HEIGHT / 2.f) }, target);
+				m_enemies.push_back(newEnemy);
+
+				if (!(rand() % 5))
+					if (spawnChance > 5)
+						--spawnChance;
+			}
+		}
+
+		std::set<Enemy*> toRemove;
+		for (auto& e : m_enemies)
+		{
+			e->update(t_deltaTime);
+			if (m_mouth.check(*e))
+				toRemove.insert(e);
+		}
+
+		m_enemies.erase(
+			std::remove_if(m_enemies.begin(), m_enemies.end(),
+				[&](Enemy* e) -> bool { return toRemove.count(e); }),
+			m_enemies.end()
+		);
+
+		m_mouth.update(t_deltaTime);
 	}
-
-	m_enemies.erase(
-		std::remove_if(m_enemies.begin(), m_enemies.end(),
-		[&](Enemy* e) -> bool { return toRemove.count(e); }),
-		m_enemies.end()
-	);
-
-	m_mouth.update(t_deltaTime);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -229,13 +256,13 @@ void Game::render()
 {
 	m_window.clear(sf::Color::White);
 
-	if (m_state == State::MENU)
+	if (m_state == GameState::MENU)
 	{
 		m_window.draw(m_background);
 		m_window.draw(m_playButton);
 		updateMenu();
 	}
-	else if (m_state == State::GAME)
+	else if (m_state == GameState::GAMEPLAY)
 	{
 		m_window.draw(m_logoSprite);
 		m_mouth.draw(m_window);
@@ -243,6 +270,11 @@ void Game::render()
 		for (Enemy* enemy : m_enemies)
 			enemy->draw(m_window);
 	}
+	else if (m_state == GameState::GAME_OVER)
+	{
+		m_window.draw(m_gameOverScreen);
+	}
+	
 
 	m_window.display();
 }
@@ -290,7 +322,7 @@ void Game::updateMenu()
 	{
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			m_state = State::GAME;
+			m_state = GameState::GAMEPLAY;
 		}
 	}
 }

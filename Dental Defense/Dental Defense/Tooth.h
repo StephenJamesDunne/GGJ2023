@@ -35,6 +35,8 @@ public:
 
 	void draw(sf::RenderWindow& t_window);
 
+	bool isDead{ false };
+
 private:
 
 protected:
@@ -42,7 +44,7 @@ protected:
 	sf::Sprite m_sprite;
 	sf::Shape* m_hitbox{ nullptr };
 
-	const int MAX_HEALTH{ 20 };
+	const int MAX_HEALTH{ 8 };
 	int m_health{ MAX_HEALTH };
 
 	std::stack<Enemy*> m_germsOnTooth;

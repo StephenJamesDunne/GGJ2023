@@ -37,6 +37,14 @@ void Tooth::die()
 	std::cout << "Tooth died :(" << std::endl;
 	m_health = 0;
 	m_sprite.setColor({ 0,0,0,0 });
+
+	isDead = true;
+
+	while (!m_germsOnTooth.empty())
+	{
+		EnemyPool::getInstance()->restore(m_germsOnTooth.top());
+		m_germsOnTooth.pop();
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////

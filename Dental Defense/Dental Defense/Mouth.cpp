@@ -128,6 +128,19 @@ void Mouth::draw(sf::RenderWindow& t_window)
 
 ////////////////////////////////////////////////////////////////////////////////
 
+std::vector<sf::Vector2f> Mouth::getTeethPositions()
+{
+	std::vector<sf::Vector2f> positions;
+
+	for (Tooth* t : m_teeth)
+		if (!t->isDead)
+			positions.push_back(t->getPosition());
+	
+	return positions;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void Mouth::loadTextures()
 {
 	auto tm = TextureManager::getInstance();

@@ -23,7 +23,7 @@ public:
 private:
 	EnemyPool();
 
-	std::array<Enemy, 50> m_enemies;
+	std::array<Enemy, 100> m_enemies;
 	std::queue<Enemy*> m_available;
 };
 

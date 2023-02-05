@@ -11,7 +11,7 @@ public:
 
 	void init();
 
-	void spawn(sf::Vector2f t_position);
+	void spawn(sf::Vector2f t_position, sf::Vector2f t_dir);
 
 	sf::Vector2f getPosition() { return m_position; }
 	void setPosition(sf::Vector2f t_position) { m_position = t_position; }
