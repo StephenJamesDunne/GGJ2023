@@ -20,16 +20,16 @@ public:
 	TextureManager(TextureManager&) = delete;
 	TextureManager& operator=(TextureManager&) = delete;
 
-	void loadTexture(const char* t_id, const char* t_path);
-	sf::Texture* loadTexture(const char* t_path);
+	void loadTexture(std::string t_id, std::string t_path);
+	sf::Texture* loadTexture(std::string t_path);
 
 	void addTexture(const char* t_id, sf::Texture* t_texure) { m_textureMap[t_id] = t_texure; }
-	sf::Texture* getTexture(const char* t_id);
+	sf::Texture* getTexture(std::string t_id);
 
 private:
 	TextureManager() {}
 
-	unordered_map<const char*, sf::Texture*> m_textureMap;
+	unordered_map<std::string, sf::Texture*> m_textureMap;
 };
 
 #endif
