@@ -1,7 +1,12 @@
 #pragma once
 
+#include <stack>
 #include <iostream>
 #include<SFML/Graphics.hpp>
+
+#include <EnemyPool.h>
+
+class Enemy;
 
 class Tooth
 {
@@ -16,7 +21,7 @@ public:
 
 	void onClick();
 
-	void germLatchedOn() { ++m_numGermsOnTooth; }
+	void germLatchedOn(Enemy* t_enemy) { m_germsOnTooth.push(t_enemy); }
 
 	void takeDamage();
 
@@ -33,6 +38,7 @@ protected:
 	const int MAX_HEALTH{ 20 };
 	int m_health{ MAX_HEALTH };
 
-	int m_numGermsOnTooth{ 0 };
+	std::stack<Enemy*> m_germsOnTooth;
 };
 
+#include <Enemy.h>

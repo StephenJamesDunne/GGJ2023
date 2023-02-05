@@ -7,17 +7,24 @@ Tooth::Tooth()
 ////////////////////////////////////////////////////////////////////////////////
 
 void Tooth::onClick()
-{	
+{
+	if (!m_germsOnTooth.empty())
+	{
+		EnemyPool::getInstance()->restore(m_germsOnTooth.top());
+		m_germsOnTooth.pop();
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void Tooth::takeDamage()
 {
-	if (m_numGermsOnTooth)
+	int germCount = m_germsOnTooth.size();
+
+	if (germCount)
 	{
-		if (m_health > m_numGermsOnTooth)
-			m_health -= m_numGermsOnTooth;
+		if (m_health > germCount)
+			m_health -= germCount;
 		else
 			die();
 

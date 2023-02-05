@@ -55,15 +55,18 @@ void Mouth::update(sf::Time t_dT)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void Mouth::check(Enemy& t_enemy)
+bool Mouth::check(Enemy& t_enemy)
 {
 	for (Tooth* t : m_teeth)
 		if (t->contains(t_enemy.getPosition()))
 		{
-			t->germLatchedOn();
+			t->germLatchedOn(&t_enemy);
 			t_enemy.setSpeed(0.f);
 			t_enemy.setPosition(t->getPosition());
+
+			return true;
 		}
+	return false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

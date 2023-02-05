@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <array>
+#include <set>
 #include <filesystem>
 #include <sstream>
 #include <TextureManager.h>

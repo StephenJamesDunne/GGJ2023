@@ -159,11 +159,20 @@ void Game::update(sf::Time t_deltaTime)
 		m_window.close();
 	}
 	
+	std::set<Enemy*> toRemove;
 	for (auto& e : m_enemies)
 	{
 		e->update(t_deltaTime);
-		m_mouth.check(*e);
+		if (m_mouth.check(*e))
+			toRemove.insert(e);
 	}
+
+	//m_enemies.erase(std::remove_if(
+	//	m_enemies.begin(),
+	//	m_enemies.end(),
+	//	[&](Enemy const* e)-> bool
+	//	{ return toRemove.count(e); }),
+	//	m_enemies.end());
 
 	m_mouth.update(t_deltaTime);
 }
