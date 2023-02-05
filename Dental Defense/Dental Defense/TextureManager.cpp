@@ -1,6 +1,6 @@
 #include <TextureManager.h>
 
-void TextureManager::loadTexture(const char* t_id, const char* t_path)
+void TextureManager::loadTexture(std::string t_id, std::string t_path)
 {
 	if (m_textureMap.count(t_id))
 		delete m_textureMap.at(t_id);
@@ -10,7 +10,7 @@ void TextureManager::loadTexture(const char* t_id, const char* t_path)
 
 ////////////////////////////////////////////////////////////
 
-sf::Texture* TextureManager::loadTexture(const char* t_path)
+sf::Texture* TextureManager::loadTexture(std::string t_path)
 try
 {
 	sf::Texture* tx = new sf::Texture();
@@ -26,7 +26,7 @@ catch (const std::exception& e)
 
 ////////////////////////////////////////////////////////////
 
-sf::Texture* TextureManager::getTexture(const char* t_id)
+sf::Texture* TextureManager::getTexture(std::string t_id)
 try
 {
 	return m_textureMap.at(t_id);

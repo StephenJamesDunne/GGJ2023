@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <array>
+#include <filesystem>
+#include <sstream>
 #include <TextureManager.h>
 #include <Mouth.h>
 #include <Enemy.h>
@@ -18,6 +20,7 @@ public:
 
 private:
 
+	void loadTextures();
 	void processEvents();
 	void processKeys(sf::Event t_event);
 	void processMousePress(sf::Event t_event);

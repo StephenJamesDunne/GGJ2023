@@ -74,7 +74,8 @@ void Mouth::draw(sf::RenderWindow& t_window)
 
 void Mouth::loadTextures()
 {
-	auto tx = TextureManager::getInstance()->getTexture("mouth");
+	auto tm = TextureManager::getInstance();
+	auto tx = tm->getTexture("mouth");
 
 	m_sprite.setTexture(*tx);
 	m_sprite.setOrigin(sf::Vector2f(tx->getSize()) / 2.f);

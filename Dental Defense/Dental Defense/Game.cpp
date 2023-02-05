@@ -4,8 +4,6 @@ const unsigned WINDOW_HEIGHT = sf::VideoMode::getDesktopMode().height / 4.0f * 3
 const unsigned WINDOW_WIDTH = sf::VideoMode::getDesktopMode().width / 4.0f * 3.0f;
 const float DEG_2_RAD = 3.14159265358979323 / 180.f;
 
-
-
 /// <summary>
 /// default constructor
 /// setup the window properties
@@ -20,10 +18,9 @@ Game::Game() :
 	tm->loadTexture("germ", "ASSETS\\IMAGES\\germ.png");
 	tm->loadTexture("mouth", "ASSETS\\IMAGES\\mouth.png");
 	
-
-
-	setupFontAndText(); // load font
+	loadTextures();
 	setupMusic();
+	setupFontAndText(); // load font
 
 	m_mouth.init();
 	
@@ -70,6 +67,23 @@ void Game::run()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+void Game::loadTextures()
+{
+	auto tm = TextureManager::getInstance();
+	std::filesystem::directory_iterator dir{ "ASSETS\\IMAGES" };
+
+	for (const auto& entry : dir)
+	{
+		auto name = entry.path().filename().string();
+		auto path = entry.path().string();
+
+		std::stringstream iss{name};
+		std::getline(iss, name, '.');
+
+		tm->loadTexture(name, path);
+	}
+}
 
 /// <summary>
 /// handle user and system events/ input
