@@ -11,6 +11,11 @@
 #include <Mouth.h>
 #include <EnemyPool.h>
 
+enum class State {
+	MENU,
+	GAME
+};
+
 class Game
 {
 public:
@@ -29,12 +34,14 @@ private:
 	void render();
 	void setupMusic();
 	void setupFontAndText();
-
+	void updateMenu();
 	std::vector<Enemy*> m_enemies;
 	Mouth m_mouth; // All our teeth live here
-
+	State m_state = State::MENU;
 	float m_speed = 5.0f;
-
+	
+	sf::Sprite m_background;
+	sf::Sprite m_playButton;
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
 	sf::Text m_welcomeMessage; // text used for message on screen
