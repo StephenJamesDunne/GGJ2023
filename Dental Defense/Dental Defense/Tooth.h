@@ -14,7 +14,13 @@ public:
 
 	virtual bool contains(sf::Vector2f t_point) = 0;
 
-	void onClick(); 
+	void onClick();
+
+	void germLatchedOn() { ++m_numGermsOnTooth; }
+
+	void takeDamage();
+
+	void die();
 
 	void draw(sf::RenderWindow& t_window) { t_window.draw(*m_hitbox); }
 
@@ -22,13 +28,11 @@ private:
 
 protected:
 
-	sf::Shape* m_hitbox;
-	
-	//health values
-	
-	//sprite, possibly sized all the same 
-	//separate textures for different health stages
-	//when the tooth dies, gains wings and flies off to heaven (+= y coord)
-	//on click function for gameplay
+	sf::Shape* m_hitbox{ nullptr };
+
+	const int MAX_HEALTH{ 20 };
+	int m_health{ MAX_HEALTH };
+
+	int m_numGermsOnTooth{ 0 };
 };
 

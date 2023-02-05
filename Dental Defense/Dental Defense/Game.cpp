@@ -121,14 +121,17 @@ void Game::processKeys(sf::Event t_event)
 {
 	static int x{ 0 };
 
+	Enemy* newEnemy{ nullptr };
+
 	switch (t_event.key.code)
 	{
 	case sf::Keyboard::Escape:
 		m_exitGame = true;
 		break;
 	case sf::Keyboard::Space:
-		
-		m_enemies[x++%10].spawn({ (WINDOW_WIDTH / 2.f), (WINDOW_HEIGHT / 2.f) });
+		newEnemy = EnemyPool::getInstance()->spawn();
+		newEnemy->spawn({ (WINDOW_WIDTH / 2.f), (WINDOW_HEIGHT / 2.f) });
+		m_enemies.push_back(newEnemy);
 		break;
 	default:
 		break;
@@ -158,9 +161,11 @@ void Game::update(sf::Time t_deltaTime)
 	
 	for (auto& e : m_enemies)
 	{
-		e.update(t_deltaTime);
-		m_mouth.check(e);
+		e->update(t_deltaTime);
+		m_mouth.check(*e);
 	}
+
+	m_mouth.update(t_deltaTime);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -175,8 +180,8 @@ void Game::render()
 	m_window.draw(m_logoSprite);
 	m_mouth.draw(m_window);
 	
-	for (Enemy& enemy : m_enemies)
-		enemy.draw(m_window);
+	for (Enemy* enemy : m_enemies)
+		enemy->draw(m_window);
 
 	m_window.display();
 }

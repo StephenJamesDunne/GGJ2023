@@ -8,7 +8,7 @@
 #include <sstream>
 #include <TextureManager.h>
 #include <Mouth.h>
-#include <Enemy.h>
+#include <EnemyPool.h>
 
 class Game
 {
@@ -29,13 +29,8 @@ private:
 	void setupMusic();
 	void setupFontAndText();
 
-	std::array<Enemy, 10> m_enemies;
+	std::vector<Enemy*> m_enemies;
 	Mouth m_mouth; // All our teeth live here
-	
-	//sf::Texture m_enemyTexture;
-	//sf::Sprite  m_enemySprite;
-	sf::Vector2f m_enemyLocation{ 200.0f, 200.0f };
-	sf::Vector2f m_enemyVelocity{ 1.0f, 1.0f };
 
 	float m_speed = 5.0f;
 

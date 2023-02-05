@@ -19,6 +19,8 @@ public:
 
 	void setPosition(sf::Vector2f t_position);
 
+	void update(sf::Time t_dT);
+
 	void check(Enemy& t_enemy);
 
 	void click(sf::Vector2f t_position);

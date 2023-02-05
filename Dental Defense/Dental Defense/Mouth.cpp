@@ -40,12 +40,27 @@ void Mouth::setPosition(sf::Vector2f t_position)
 
 ////////////////////////////////////////////////////////////////////////////////
 
+void Mouth::update(sf::Time t_dT)
+{
+	static sf::Time tslu;
+	tslu += t_dT;
+
+	if (tslu > sf::seconds(1))
+	{
+		for (auto& t : m_teeth)
+			t->takeDamage();
+		tslu = sf::seconds(0);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void Mouth::check(Enemy& t_enemy)
 {
 	for (Tooth* t : m_teeth)
 		if (t->contains(t_enemy.getPosition()))
 		{
-			t->onClick();
+			t->germLatchedOn();
 			t_enemy.setSpeed(0.f);
 			t_enemy.setPosition(t->getPosition());
 		}
